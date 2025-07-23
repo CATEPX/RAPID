@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@mui/icons-material": "^7.1.2",
+    "web-vitals": "^5.0.3"
+  }
+}
