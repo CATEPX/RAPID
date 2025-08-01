@@ -1,5 +1,3 @@
-// Updated App.js
-
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -13,97 +11,77 @@ import PublicIcon from '@mui/icons-material/Public';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeIcon from '@mui/icons-material/Home';
+import Dashboard from './Dashboard';
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#a259f7' }, // purple accent
-    background: { default: '#181a20', paper: '#23232e' }, // true charcoal
-    secondary: { main: '#3ec6e0' }, // cyan accent
-    success: { main: '#43e0a0' }, // mint
-    warning: { main: '#ffb300' },
-    error: { main: '#ff6f61' }, // coral
-    info: { main: '#00bcd4' },
-    text: { primary: '#f5f7fa', secondary: '#b3b8c5' },
-    divider: '#a259f7',
+    primary: { main: '#9263e9' },     // Softer purple
+    secondary: { main: '#38bec9' },   // Softer teal
+    background: {
+      default: '#121218',             // Slightly lighter black for better readability
+      paper: '#1e1e2d',               // Softer dark blue-gray
+    },
+    success: { main: '#2bb07f' },     // Softer green
+    warning: { main: '#e69a42' },     // Softer orange
+    error: { main: '#e05c7d' },       // Softer red
+    info: { main: '#5e96f2' },        // Softer blue
+    text: {
+      primary: '#f2f2fa',             // Brighter white for better contrast
+      secondary: '#c5c5d6',           // Lighter gray for better readability
+    },
+    divider: '#383846',               // Subtle divider
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: '#23232e',
-          color: '#f5f7fa',
-          boxShadow: '0 2px 8px 0 rgba(162,89,247,0.10)',
-          borderBottom: '3px solid #a259f7',
+          background: 'linear-gradient(135deg, #1e1e2d 0%, #2e2b5d 100%)', // More subtle gradient
+          color: '#f2f2fa',
+          borderBottom: '2px solid #9263e9',
+          backdropFilter: 'blur(15px)',
+          boxShadow: '0 4px 30px rgba(146, 99, 233, 0.12)',
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          background: '#23232e',
-          boxShadow: '0 4px 24px 0 rgba(162,89,247,0.12)',
-          border: '1.5px solid #3ec6e0',
-          borderTop: '4px solid #a259f7',
-          borderRadius: 16,
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          background: '#23232e',
-          border: '1.5px solid #a259f7',
-          borderRadius: 16,
-          transition: 'border-color 0.2s',
-        },
-        input: {
-          background: 'transparent',
-          color: '#f5f7fa',
-          '&:focus': {
-            borderColor: '#3ec6e0',
-            boxShadow: '0 0 0 2px #a259f7',
-          },
+          background: 'linear-gradient(145deg, #1e1e2d 0%, #252536 100%)', // More subtle gradient
+          border: '1px solid #383846',
+          borderRadius: 24,
+          backdropFilter: 'blur(15px)',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)',
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          boxShadow: '0 2px 8px 0 rgba(162,89,247,0.10)',
-          borderRadius: 16,
-          fontWeight: 700,
-          background: 'linear-gradient(90deg, #a259f7 60%, #3ec6e0 100%)',
+          background: 'linear-gradient(135deg, #9263e9 0%, #7e58d9 100%)', // Softer gradient
           color: '#fff',
           '&:hover': {
-            background: 'linear-gradient(90deg, #3ec6e0 60%, #a259f7 100%)',
+            background: 'linear-gradient(135deg, #7e58d9 0%, #6a48c8 100%)',
+            transform: 'translateY(-3px)',
+            boxShadow: '0 12px 25px rgba(146, 99, 233, 0.25)',
           },
-        },
-      },
-    },
-    MuiLinearProgress: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#3ec6e0',
-        },
-      },
-    },
-    MuiDivider: {
-      styleOverrides: {
-        root: {
-          background: 'linear-gradient(90deg, #a259f7 0%, #3ec6e0 100%)',
-          opacity: 0.4,
+          borderRadius: 18,
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          fontWeight: 600,
+          letterSpacing: '0.5px',
         },
       },
     },
   },
   typography: {
-    fontFamily: 'Montserrat, Arial, sans-serif',
-    h4: { fontWeight: 700, color: '#a259f7' },
-    h5: { fontWeight: 700, color: '#3ec6e0' },
-    h6: { fontWeight: 600, color: '#3ec6e0' },
-    body1: { fontWeight: 500 },
-    body2: { fontWeight: 400 },
+    fontFamily: '"Inter", "Segoe UI", Roboto, sans-serif',
+    h4: { fontWeight: 800, color: '#fa7a94', letterSpacing: '-0.025em', lineHeight: 1.2 }, // Brighter red
+    h5: { fontWeight: 700, color: '#4ad6e2', letterSpacing: '-0.015em', lineHeight: 1.3 }, // Brighter teal
+    h6: { fontWeight: 600, color: '#fa7a94', letterSpacing: '-0.01em', lineHeight: 1.4 }, // Brighter red
+    body1: { lineHeight: 1.7, letterSpacing: '0.01em', color: '#f2f2fa' }, // Explicit color
+    body2: { lineHeight: 1.6, letterSpacing: '0.005em', color: '#c5c5d6' }, // Explicit color
   },
   shape: { borderRadius: 16 },
 });
@@ -111,92 +89,93 @@ const darkTheme = createTheme({
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary: { main: '#3ec6e0' },
-    background: { default: 'linear-gradient(135deg, #fafdff 0%, #e0f7fa 60%, #e1eaff 100%)', paper: 'linear-gradient(135deg, #fafdff 0%, #e0f7fa 60%, #e1eaff 100%)' },
-    secondary: { main: '#a259f7' },
-    success: { main: '#43a047' },
-    warning: { main: '#fbc02d' },
-    error: { main: '#e57373' },
-    info: { main: '#00bcd4' },
-    text: { primary: '#23272b', secondary: '#5a5a5a' },
-    divider: '#b3d1f7',
+    primary: { main: '#3887d1' },     // Changed to blue to match theme
+    secondary: { main: '#2aa1b3' },   // Keeping the softer teal
+    background: {
+      default: '#394c5e',             // Medium blue-teal shade, distinct from dark mode
+      paper: '#4a5f73',               // Lighter blue-teal shade
+    },
+    success: { main: '#2a9d8f' },     // Keeping the softer green
+    warning: { main: '#e9a046' },     // Keeping the softer orange
+    error: { main: '#d45565' },       // Keeping the softer red
+    info: { main: '#4782da' },        // Keeping the softer blue
+    text: {
+      primary: '#f0f7ff',             // Brighter, slightly blue-tinted text
+      secondary: '#c8dbf0',           // Brighter secondary text with blue tint
+    },
+    divider: '#5a6e80',               // Subtle divider that complements the theme
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(90deg, #fafdff 60%, #e0f7fa 100%)',
-          color: '#23272b',
-          boxShadow: '0 2px 8px 0 rgba(62,198,224,0.08)',
-          borderBottom: '3px solid #3ec6e0',
+          background: 'linear-gradient(135deg, #4a5f73 0%, #405466 100%)', // Blue-teal gradient
+          color: '#f0f7ff',
+          borderBottom: '2px solid #3887d1',  // Changed to blue
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(135deg, #fafdff 0%, #e0f7fa 60%, #e1eaff 100%)',
-          boxShadow: '0 4px 24px 0 rgba(62,198,224,0.12)',
-          border: '1.5px solid #b3d1f7',
-          borderTop: '4px solid #3ec6e0',
-          borderRadius: 16,
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          background: 'linear-gradient(135deg, #fafdff 0%, #e0f7fa 60%, #e1eaff 100%)',
-          border: '1.5px solid #b3d1f7',
-          borderRadius: 16,
-          transition: 'border-color 0.2s',
-        },
-        input: {
-          background: 'transparent',
-          '&:focus': {
-            borderColor: '#3ec6e0',
-            boxShadow: '0 0 0 2px #a259f7',
-          },
+          background: 'linear-gradient(145deg, #4a5f73 0%, #405466 100%)', // Blue-teal gradient
+          border: '1px solid #5a6e80',
+          borderRadius: 24,
+          boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          boxShadow: '0 2px 8px 0 rgba(62,198,224,0.10)',
-          borderRadius: 16,
-          fontWeight: 700,
-          background: 'linear-gradient(90deg, #3ec6e0 60%, #a259f7 100%)',
+          background: 'linear-gradient(135deg, #3887d1 0%, #2a75b8 100%)', // Changed to blue gradient
           color: '#fff',
           '&:hover': {
-            background: 'linear-gradient(90deg, #a259f7 60%, #3ec6e0 100%)',
+            background: 'linear-gradient(135deg, #4a9be3 0%, #3887d1 100%)', // Changed to lighter blue gradient
+            transform: 'translateY(-3px)',
+            boxShadow: '0 12px 25px rgba(56, 135, 209, 0.25)', // Changed shadow color
           },
+          borderRadius: 18,
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          fontWeight: 600,
+          letterSpacing: '0.5px',
         },
       },
     },
-    MuiLinearProgress: {
+    MuiTextField: {
       styleOverrides: {
         root: {
-          backgroundColor: '#b3d1f7',
-        },
-      },
+          '& .MuiOutlinedInput-root': {
+            backgroundColor: 'rgba(62, 79, 96, 0.7)',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#5a6e80',
+          },
+          '& .MuiInputLabel-root': {
+            color: '#c8dbf0',
+          },
+          '& .MuiOutlinedInput-input': {
+            color: '#f0f7ff',
+          }
+        }
+      }
     },
-    MuiDivider: {
+    MuiChip: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(90deg, #3ec6e0 0%, #a259f7 100%)',
-          opacity: 0.4,
-        },
-      },
+          backgroundColor: 'rgba(74, 95, 115, 0.6)',
+        }
+      }
     },
   },
   typography: {
-    fontFamily: 'Montserrat, Arial, sans-serif',
-    h4: { fontWeight: 700, color: '#3ec6e0' },
-    h5: { fontWeight: 700, color: '#a259f7' },
-    h6: { fontWeight: 600, color: '#a259f7' },
-    body1: { fontWeight: 500 },
-    body2: { fontWeight: 400 },
+    fontFamily: '"Inter", "Segoe UI", Roboto, sans-serif',
+    h4: { fontWeight: 800, color: '#ff758f', letterSpacing: '-0.025em', lineHeight: 1.2 }, // Brighter red with blue undertone
+    h5: { fontWeight: 700, color: '#41d6e4', letterSpacing: '-0.015em', lineHeight: 1.3 }, // Brighter teal
+    h6: { fontWeight: 600, color: '#ff758f', letterSpacing: '-0.01em', lineHeight: 1.4 }, // Brighter red with blue undertone
+    body1: { lineHeight: 1.7, letterSpacing: '0.01em', color: '#f0f7ff' }, // Explicit color
+    body2: { lineHeight: 1.6, letterSpacing: '0.005em', color: '#c8dbf0' }, // Explicit color
   },
   shape: { borderRadius: 16 },
 });
@@ -225,16 +204,15 @@ const Logo = () => (
 );
 
 function LearnMorePage() {
-  // This page will now correctly inherit the theme from the ThemeProvider
   return (
-    <Box sx={{ width: '100%', maxWidth: 700, mx: 'auto', mt: 8, mb: 4, px:2 }}>
-      <Paper elevation={8} sx={{ p: 5, borderRadius: 5, boxShadow: theme => `0 8px 32px 0 ${theme.palette.primary.main}1A` }}>
-        <Typography variant="h4" sx={{ color: 'primary.main', fontWeight: 700, mb: 2 }}>
+    <Box sx={{ width: '100%', maxWidth: 700, mx: 'auto', mt: 8, mb: 4, px: 2 }}>
+      <Paper elevation={8} sx={{ p: 6, borderRadius: 6, boxShadow: theme => `0 12px 40px 0 ${theme.palette.primary.main}20` }}>
+        <Typography variant="h4" sx={{ color: 'primary.main', fontWeight: 800, mb: 3, textAlign: 'center' }}>
           How RAPID Works
         </Typography>
-        <Divider sx={{ mb: 3, bgcolor: 'primary.main' }} />
-        <Typography variant="body1" sx={{ color: 'text.secondary', mb: 2 }}>
-          RAPID (Real Time AI Phishing and Detection) analyzes website URLs using a set of security heuristics to help you avoid phishing and insecure domains. Here’s what goes into your trust score:
+        <Divider sx={{ mb: 4, bgcolor: 'primary.main', height: 2 }} />
+        <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4, lineHeight: 1.8, fontSize: '1.1rem' }}>
+          RAPID (Real Time AI Phishing and Detection) analyzes website URLs using a set of security heuristics to help you avoid phishing and insecure domains. Here's what goes into your trust score:
         </Typography>
         <List>
           <ListItem>
@@ -254,24 +232,24 @@ function LearnMorePage() {
             <ListItemText primary="Suspicious Patterns" secondary="Detects suspicious TLDs, too many subdomains, IP-like domains, URL shorteners, and non-Latin characters." />
           </ListItem>
         </List>
-        <Divider sx={{ my: 3, bgcolor: 'primary.main', opacity: 0.3 }} />
-        <Typography variant="h6" sx={{ color: 'primary.main', mb: 1, fontWeight: 600 }}>
+        <Divider sx={{ my: 4, bgcolor: 'primary.main', opacity: 0.4, height: 2 }} />
+        <Typography variant="h6" sx={{ color: 'primary.main', mb: 2, fontWeight: 700, fontSize: '1.3rem' }}>
           Trust Score
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+        <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3, lineHeight: 1.7 }}>
           The trust score is calculated based on the above checks. A higher score means the URL is more likely to be safe. Scores are color-coded:
         </Typography>
         <List>
-          <ListItem><Chip label="High Trust (80-100)" sx={{ background: 'success.main', color: 'background.default', fontWeight: 600 }} /></ListItem>
-          <ListItem><Chip label="Moderate Trust (60-79)" sx={{ background: 'warning.main', color: 'background.default', fontWeight: 600 }} /></ListItem>
-          <ListItem><Chip label="Low Trust (0-59)" sx={{ background: 'error.main', color: 'background.paper', fontWeight: 600 }} /></ListItem>
+          <ListItem><Chip label="High Trust (80-100)" sx={{ background: theme => theme.palette.success.main + '20', color: theme => theme.palette.success.main, fontWeight: 600 }} /></ListItem>
+          <ListItem><Chip label="Moderate Trust (60-79)" sx={{ background: theme => theme.palette.warning.main + '20', color: theme => theme.palette.warning.main, fontWeight: 600 }} /></ListItem>
+          <ListItem><Chip label="Low Trust (0-59)" sx={{ background: theme => theme.palette.error.main + '20', color: theme => theme.palette.error.main, fontWeight: 600 }} /></ListItem>
         </List>
-        <Divider sx={{ my: 3, bgcolor: 'primary.main', opacity: 0.3 }} />
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Divider sx={{ my: 4, bgcolor: 'primary.main', opacity: 0.4, height: 2 }} />
+        <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.7, fontSize: '1rem' }}>
           RAPID does not guarantee absolute safety. Always use caution and look for other signs of phishing or malicious intent.
         </Typography>
-        <Box sx={{ mt: 4, textAlign: 'center' }}>
-          <Link to="/" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 600, fontSize: 18 }}>
+        <Box sx={{ mt: 5, textAlign: 'center' }}>
+          <Link to="/" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.5px' }}>
             ← Back to RAPID
           </Link>
         </Box>
@@ -299,7 +277,7 @@ function MainApp({ isDarkMode }) {
     setResult(null);
     setError('');
     try {
-      const response = await fetch('http://localhost:5000/check', {
+      const response = await fetch('http://localhost:8000/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url }),
@@ -308,7 +286,7 @@ function MainApp({ isDarkMode }) {
       if (response.ok) {
         setResult(data);
       } else {
-        setError(data.error || 'Check failed.');
+        setError(data.detail || 'Analysis failed.');
       }
     } catch (err) {
       setError('Could not connect to backend.');
@@ -327,65 +305,77 @@ function MainApp({ isDarkMode }) {
   return (
     <Container maxWidth={false} disableGutters sx={{ background: theme => theme.palette.background.default, minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 0 }}>
       <Box sx={{ width: '100%', maxWidth: 540, mt: 10, mb: 4, px: 2 }}>
-        <Paper elevation={8} sx={{ p: { xs: 2, sm: 5 }, borderRadius: 5, boxShadow: theme => `0 8px 32px 0 ${theme.palette.primary.main}1A` }}>
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+        <Paper elevation={8} sx={{ p: { xs: 3, sm: 6 }, borderRadius: 6, boxShadow: (theme) => `0 12px 40px 0 ${theme.palette.primary.main}20` }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             <TextField
-              label="Enter URL"
+              label="Example: google.com or https://google.com/"
               variant="outlined"
-            value={url}
+              value={url}
               onChange={handleChange}
               required
               fullWidth
               autoFocus
-            disabled={loading}
+              disabled={loading}
             />
-            <Button variant="contained" color="primary" type="submit" size="large" disabled={loading} sx={{ fontWeight: 600, letterSpacing: 1, py: 1.5, borderRadius: 2, fontSize: 18 }}>
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Check URL'}
+            <Button variant="contained" color="primary" type="submit" size="large" disabled={loading} sx={{ fontWeight: 700, letterSpacing: 1.2, py: 2, borderRadius: 3, fontSize: '1.1rem', minHeight: 56 }}>
+              {loading ? <CircularProgress size={26} color="inherit" /> : 'Check URL'}
             </Button>
           </form>
           <Fade in={!!result} timeout={600}>
-            <Box sx={{ mt: 7 }}>
+            <Box sx={{ mt: 8 }}>
               {result && (
-                <Paper elevation={6} sx={{ p: 4, borderRadius: 4, border: `2.5px solid ${getScoreColor(theme, result.trust_score)}`, boxShadow: `0 4px 24px 0 ${getScoreColor(theme, result.trust_score)}2A` }}>
-                  <Typography variant="h6" align="center" sx={{ color: getScoreColor(theme, result.trust_score), fontWeight: 700, mb: 2 }}>
+                <Paper elevation={6} sx={{ p: 5, borderRadius: 5, border: `3px solid ${getScoreColor(theme, result.trust_score)}`, boxShadow: `0 8px 32px 0 ${getScoreColor(theme, result.trust_score)}30` }}>
+                  <Typography variant="h6" align="center" sx={{ color: getScoreColor(theme, result.trust_score), fontWeight: 800, mb: 3, fontSize: '1.4rem', letterSpacing: '0.5px' }}>
                     Trust Score
                   </Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
                     <LinearProgress variant="determinate" value={result.trust_score} sx={{ height: 16, borderRadius: 8, width: '80%', '& .MuiLinearProgress-bar': { backgroundColor: getScoreColor(theme, result.trust_score) } }} />
                     <Typography variant="h5" sx={{ ml: 2, color: getScoreColor(theme, result.trust_score), fontWeight: 700 }}>{result.trust_score}</Typography>
                   </Box>
-                  <Typography variant="body1" align="center" sx={{ color: getScoreColor(theme, result.trust_score), fontWeight: 600, mb: 2 }}>
+                  <Typography variant="body1" align="center" sx={{ color: getScoreColor(theme, result.trust_score), fontWeight: 700, mb: 3, fontSize: '1.1rem', letterSpacing: '0.3px' }}>
                     {result.is_legitimate ? 'Legitimate (Safe)' : 'Suspicious (Potential Risk)'}
                   </Typography>
-                  <Divider sx={{ my: 2, bgcolor: getScoreColor(theme, result.trust_score), opacity: 0.3 }} />
+                  <Divider sx={{ my: 3, bgcolor: getScoreColor(theme, result.trust_score), opacity: 0.4, height: 2 }} />
                   <List>
                     <ListItem>
                       <ListItemIcon>
-                        {result.checks.is_accessible ? <PublicIcon color="success" /> : <PublicIcon color="error" />}
+                        {result.is_accessible ? <PublicIcon color="success" /> : <PublicIcon color="error" />}
                       </ListItemIcon>
-                      <ListItemText primary="Website Accessible" secondary={result.checks.is_accessible ? `Status: ${result.checks.status_code}` : 'Not reachable'} />
+                      <ListItemText primary="Website Accessible" secondary={result.is_accessible ? 'Website is accessible' : 'Not reachable'} />
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
-                        {result.checks.has_ssl ? <LockIcon color="success" /> : <LockOpenIcon color="error" />}
+                        {result.has_ssl && result.ssl_valid ? <LockIcon color="success" /> : <LockOpenIcon color="error" />}
                       </ListItemIcon>
-                      <ListItemText primary="Valid SSL Certificate" secondary={result.checks.has_ssl ? 'SSL is valid' : 'No valid SSL'} />
+                      <ListItemText primary="Valid SSL Certificate" secondary={result.has_ssl && result.ssl_valid ? 'SSL is valid' : result.has_ssl ? 'SSL has issues' : 'No valid SSL'} />
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
-                        {domainAgeCheck(result.checks.domain_age).pass ? <CalendarMonthIcon color="success" /> : <CalendarMonthIcon color="error" />}
+                        {domainAgeCheck(result.domain_age_days).pass ? <CalendarMonthIcon color="success" /> : <CalendarMonthIcon color="error" />}
                       </ListItemIcon>
-                      <ListItemText primary="Domain Age" secondary={domainAgeCheck(result.checks.domain_age).text} />
+                      <ListItemText primary="Domain Age" secondary={domainAgeCheck(result.domain_age_days).text} />
                     </ListItem>
-                    {result.reasons.filter(r => r.startsWith('Warning:')).map((reason, idx) => (
+                    {result.suspicious_patterns && result.suspicious_patterns.map((pattern, idx) => (
                       <ListItem key={idx}>
                         <ListItemIcon>
                           <WarningAmberIcon color="warning" />
                         </ListItemIcon>
-                        <ListItemText primary={reason.replace('Warning: ', '')} />
+                        <ListItemText primary={pattern.pattern} secondary={pattern.description} />
                       </ListItem>
                     ))}
                   </List>
+                  <Divider sx={{ my: 3, bgcolor: getScoreColor(theme, result.trust_score), opacity: 0.4, height: 2 }} />
+                  <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 2, fontWeight: 600, fontFamily: 'Inter, Arial, sans-serif', fontSize: '1.1rem' }}>
+                    Analysis Summary
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Typography variant="body1" sx={{ color: 'text.secondary', fontFamily: 'Inter, Arial, sans-serif', lineHeight: 1.7 }}>
+                      {result.analysis_summary}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ color: 'text.secondary', mt: 3, fontFamily: 'Inter, Arial, sans-serif', opacity: 0.8 }}>
+                    Analyzed at: {new Date(result.timestamp).toLocaleString()}
+                  </Typography>
                 </Paper>
               )}
             </Box>
@@ -394,8 +384,8 @@ function MainApp({ isDarkMode }) {
       </Box>
       <Fade in={!result && !error} timeout={600}>
         <Box sx={{ width: '100%', maxWidth: 540, mb: 4, px: 2 }}>
-          <Paper elevation={0} sx={{ p: 3, background: 'transparent', textAlign: 'left' }}>
-            <Typography variant="h6" sx={{ color: 'primary.main', mb: 2, fontWeight: 600 }}>
+          <Paper elevation={0} sx={{ p: 4, background: 'transparent', textAlign: 'left' }}>
+            <Typography variant="h6" sx={{ color: 'primary.main', mb: 3, fontWeight: 700, fontSize: '1.3rem', letterSpacing: '0.3px' }}>
               How does RAPID score URLs?
             </Typography>
             <List>
@@ -422,14 +412,31 @@ function PageWrapper({ children, toggleTheme, isDarkMode }) {
         <Toolbar sx={{ minHeight: 72, display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', px: 2 }}>
           <Logo />
           <Box>
-            <Typography variant="h5" sx={{ fontWeight: 700, letterSpacing: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: 800, letterSpacing: 2.5, fontSize: '1.6rem' }}>
               RAPID
             </Typography>
-            <Typography variant="subtitle2" sx={{ fontWeight: 400, letterSpacing: 1, fontSize: 15, color: 'text.secondary' }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 500, letterSpacing: 1.2, fontSize: 16, color: 'text.secondary', mt: 0.5 }}>
               Real Time AI Phishing and Detection
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: 2 }}>
+            <Tooltip title="Home">
+              <IconButton color="inherit" component={Link} to="/">
+                <HomeIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Dashboard">
+              <IconButton color="inherit" component={Link} to="/dashboard">
+                <DashboardIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Learn More">
+              <IconButton color="inherit" component={Link} to="/learn-more">
+                <PublicIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
           <Tooltip title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
             <IconButton color="inherit" onClick={toggleTheme}>
               {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
@@ -438,8 +445,8 @@ function PageWrapper({ children, toggleTheme, isDarkMode }) {
         </Toolbar>
       </AppBar>
       {children}
-      <Box sx={{ width: '100%', py: 2, textAlign: 'center', boxShadow: theme => `0 -2px 12px 0 ${theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.06)'}`, background: theme => theme.palette.background.paper }}>
-        <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+      <Box sx={{ width: '100%', py: 3, textAlign: 'center', boxShadow: '0 -4px 20px 0 rgba(0,0,0,0.15)', background: theme => theme.palette.mode === 'dark' ? theme.palette.background.paper : '#344456' }}>
+        <Typography variant="body1" sx={{ mt: 1, color: 'text.secondary', lineHeight: 1.7, maxWidth: 800, mx: 'auto', px: 2 }}>
           About RAPID: RAPID is a real-time security tool that analyzes website URLs using advanced heuristics to help you avoid phishing and insecure domains. Stay safe online!
         </Typography>
       </Box>
@@ -458,6 +465,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<PageWrapper isDarkMode={isDarkMode} toggleTheme={toggleTheme}><MainApp isDarkMode={isDarkMode} /></PageWrapper>} />
+          <Route path="/dashboard" element={<PageWrapper isDarkMode={isDarkMode} toggleTheme={toggleTheme}><Dashboard theme={currentTheme} /></PageWrapper>} />
           <Route path="/learn-more" element={<PageWrapper isDarkMode={isDarkMode} toggleTheme={toggleTheme}><LearnMorePage /></PageWrapper>} />
         </Routes>
       </Router>
