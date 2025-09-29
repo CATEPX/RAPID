@@ -1,14 +1,16 @@
-ECHO is on.
 # Python
-__pycache__/
 *.pyc
-*.pyo
-*.pyd
-env/
-venv/
+__pycache__/
+.venv/
+.env
 
-# OS junk
+# Node
+node_modules/
+dist/
+build/
+
+# OS & IDE
 .DS_Store
-
-# Logs
+.vscode/
+.idea/
 *.log
