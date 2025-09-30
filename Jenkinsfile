@@ -34,8 +34,8 @@ pipeline {
             steps {
                 bat '''
                     echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
-                    docker push nikhil0612/backend:latest
-                    docker push nikhil0612/frontend:latest
+                    docker push nikhil0612/backend-rapid:latest
+                    docker push nikhil0612/frontend-rapid:latest
                 '''
             }
         }
