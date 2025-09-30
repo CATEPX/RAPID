@@ -17,7 +17,7 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 dir('backend') {
-                    sh 'docker build -t nikhil0612/backend-rapid:latest .'
+                    bat 'docker build -t nikhil0612/backend-rapid:latest .'
                 }
             }
         }
@@ -25,14 +25,14 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 dir('frontend') {
-                    sh 'docker build -t nikhil0612/frontend-rapid:latest .'
+                    bat 'docker build -t nikhil0612/frontend-rapid:latest .'
                 }
             }
         }
 
         stage('Push Images to DockerHub') {
             steps {
-                sh '''
+                bat '''
                     echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
                     docker push nikhil0612/backend:latest
                     docker push nikhil0612/frontend:latest
@@ -43,7 +43,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sshagent(['ba493553-19b6-44dd-acc7-c0642a18648e']) {
-                    sh '''
+                    bat '''
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
                             cd /home/ubuntu &&
                             docker-compose pull &&
