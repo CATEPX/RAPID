@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY /backend /app/
+COPY backend /app/
 EXPOSE 8000
 ENV ENV_FILE=/app/.env
 CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
