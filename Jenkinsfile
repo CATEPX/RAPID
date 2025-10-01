@@ -43,7 +43,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2',
+                withCredentials([sshUserPrivateKey(credentialsId: 'ba493553-19b6-44dd-acc7-c0642a18648e',
                                                 keyFileVariable: 'SSH_KEY',
                                                 usernameVariable: 'SSH_USER')]) {
                     bat """
