@@ -47,6 +47,9 @@ pipeline {
                                                 keyFileVariable: 'SSH_KEY',
                                                 usernameVariable: 'SSH_USER')]) {
                     bat """
+                        :: Remove inheritance and grant read-only permission to current user
+                        icacls "%SSH_KEY%" /inheritance:r /grant:r "%NIKHIL\nikhi%:R"
+
                         :: Run SSH command using restricted key
                         ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@${EC2_HOST} ^
                         "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
