@@ -48,7 +48,7 @@ pipeline {
                                                 usernameVariable: 'SSH_USER')]) {
                     bat """
                         :: Remove inheritance and grant read-only permission to current user
-                        icacls "%SSH_KEY%" /inheritance:r /grant:r "%NIKHIL\nikhi%:R"
+                        icacls "%SSH_KEY%" /inheritance:r /grant:r "NIKHIL\nikhi:R"
 
                         :: Run SSH command using restricted key
                         ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@${EC2_HOST} ^
