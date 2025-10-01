@@ -43,9 +43,12 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(['ba493553-19b6-44dd-acc7-c0642a18648e']) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2',
+                                                keyFileVariable: 'SSH_KEY',
+                                                usernameVariable: 'SSH_USER')]) {
                     bat """
-                        ssh -o StrictHostKeyChecking=no ubuntu@%EC2_HOST% "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
+                        ssh -i %SSH_KEY% -o StrictHostKeyChecking=no %SSH_USER%@${EC2_HOST} ^
+                    "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
                     """
                 }
             }
