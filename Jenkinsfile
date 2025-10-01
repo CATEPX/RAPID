@@ -1,8 +1,9 @@
 pipeline {
     agent any
-
+    parameters {
+        string(name: 'EC2_HOST', description: 'EC2 instance IP')
+    }
     environment {
-        EC2_HOST = '13.203.102.215'
         DOCKERHUB_CREDS = credentials('44d64fbd-fc4d-48de-b4b5-e14791ef332d')
     }
 
