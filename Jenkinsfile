@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        EC2_HOST = '13.203.221.175'
+        EC2_HOST = '13.203.102.215'
         DOCKERHUB_CREDS = credentials('44d64fbd-fc4d-48de-b4b5-e14791ef332d')
     }
 
