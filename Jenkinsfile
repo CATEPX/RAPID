@@ -43,17 +43,18 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ba493553-19b6-44dd-acc7-c0642a18648e',
-                                                keyFileVariable: 'SSH_KEY',
-                                                usernameVariable: 'SSH_USER')]) {
+                withCredentials([sshUserPrivateKey(
+                    credentialsId: 'ba493553-19b6-44dd-acc7-c0642a18648e', 
+                    keyFileVariable: 'SSH_KEY', 
+                    usernameVariable: 'SSH_USER')]) {
                     bat """
-                        :: Use ssh with relaxed permissions check
-                        ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes %SSH_USER%@${EC2_HOST} ^
-                        "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
+                    ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@%EC2_HOST% ^
+                    "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
                     """
                 }
             }
         }
+
 
     }
 
