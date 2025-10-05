@@ -18,7 +18,7 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 dir('backend') {
-                    bat 'docker build -t nikhil0612/backend-rapid:latest .'
+                    sh 'docker build -t nikhil0612/backend-rapid:latest .'
                 }
             }
         }
@@ -26,35 +26,31 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 dir('frontend') {
-                    bat 'docker build -t nikhil0612/frontend-rapid:latest .'
+                    sh 'docker build -t nikhil0612/frontend-rapid:latest .'
                 }
             }
         }
 
         stage('Push Images to DockerHub') {
             steps {
-                bat """
-                    echo %DOCKERHUB_CREDS_PSW% | docker login -u %DOCKERHUB_CREDS_USR% --password-stdin
+                sh '''
+                    echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
                     docker push nikhil0612/backend-rapid:latest
                     docker push nikhil0612/frontend-rapid:latest
-                """
+                '''
             }
         }
 
         stage('Deploy to EC2') {
             steps {
-                withCredentials([sshUserPrivateKey(
-                    credentialsId: 'ba493553-19b6-44dd-acc7-c0642a18648e', 
-                    keyFileVariable: 'SSH_KEY', 
-                    usernameVariable: 'SSH_USER')]) {
-                    bat """
-                    ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@%EC2_HOST% ^
-                    "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
-                    """
+                sshagent(['ba493553-19b6-44dd-acc7-c0642a18648e']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no $EC2_HOST \
+                        "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
+                    '''
                 }
             }
         }
-
 
     }
 
