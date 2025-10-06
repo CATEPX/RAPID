@@ -1,10 +1,8 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'EC2_HOST', description: 'EC2 instance IP')
-    }
+
     environment {
-        DOCKERHUB_CREDS = credentials('44d64fbd-fc4d-48de-b4b5-e14791ef332d')
+        DOCKERHUB_CREDS = credentials('docker-hub creds')
     }
 
     stages {
@@ -41,14 +39,13 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Deploy on EC2') {
             steps {
-                sshagent(['ba493553-19b6-44dd-acc7-c0642a18648e']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no $EC2_HOST \
-                        "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
-                    '''
-                }
+                sh '''
+                    cd /home/ubuntu
+                    docker-compose pull
+                    docker-compose up -d
+                '''
             }
         }
 
